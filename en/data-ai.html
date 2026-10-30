@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Data & AI — AIS Conseil | Classification and guardrails</title>
+<meta name="description" content="How AIS Conseil classifies your data into four levels and protects what you entrust to an AI agent: least-privilege role access, minimization, logging, out-of-scope refusal, human validation.">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="barre">
+    <a class="logo" href="index.html">AIS <span>Conseil</span></a>
+    <div class="langue"><a href="../donnees-ia.html">FR</a> | <a href="data-ai.html" class="actif">EN</a></div>
+  </div>
+  <nav class="principale">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="data-ai.html" class="actif">Your Data & AI</a>
+    <a href="method-demo.html">Method & Demo</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page">Your data & AI</h1>
+  <p class="lead">An AI agent should never see more than its task requires. That is a matter of design, not blind trust — and it is exactly our trade, born of identity and access management (IAM/PAM).</p>
+
+  <h2>Four data levels</h2>
+  <p>Every piece of information entrusted to an agent is classified before deployment:</p>
+  <table>
+    <tr><th>Level</th><th>Examples</th><th>Rule for the agent</th></tr>
+    <tr><td><strong>1. Public</strong></td><td>Hours, services offered, FAQs, information from your website</td><td>Open access: the agent's normal working base.</td></tr>
+    <tr><td><strong>2. Internal</strong></td><td>Internal procedures, document templates, operating rules</td><td>Reserved for the "employee" role; never served to the public.</td></tr>
+    <tr><td><strong>3. Personal</strong></td><td>Name, contact details, a client's or employee's file</td><td>Out of scope by default: the agent escalates to a human instead of handling it.</td></tr>
+    <tr><td><strong>4. Sensitive or regulated</strong></td><td>Financial or health data, trade secrets, negotiated rates</td><td>Never exposed to the agent without a specific assessment, a suitable model (often local), and explicit approval.</td></tr>
+  </table>
+
+  <h2>Five guardrails, always</h2>
+  <div class="cartes">
+    <div class="carte"><span class="numero">1</span><h3>Least-privilege role access</h3><p>Each agent has its own identity and only opens documents within its role. A document not authorized for the role is never served — even if asked for directly.</p></div>
+    <div class="carte"><span class="numero">2</span><h3>Minimization</h3><p>The agent asks for and processes only the information its specific task needs. Nothing extra is collected "just in case."</p></div>
+    <div class="carte"><span class="numero">3</span><h3>Logging</h3><p>Every answer, refusal, and escalation is logged with its source. You can check afterwards what the agent said and why.</p></div>
+    <div class="carte"><span class="numero">4</span><h3>Out-of-scope refusal</h3><p>If the information is not in the authorized documents, the agent refuses and directs the person to a human. It never invents a price, a deadline, or a policy.</p></div>
+    <div class="carte"><span class="numero">5</span><h3>Human validation</h3><p>A draft is never a send. Every sensitive action — sending, committing, a personal file — goes through a human's decision.</p></div>
+  </div>
+
+  <h2>Local or online?</h2>
+  <p>Depending on your data's sensitivity, an AI model can run <strong>locally</strong>, on a computer at your business, without your information ever leaving your premises; or <strong>online</strong>, for uses where only public information is processed. The assessment settles this question with you, based on real figures and constraints — it is never a default choice.</p>
+
+  <div class="principe">
+    <strong>Our founding principle:</strong> the agent never replaces the human. It serves the human: it lightens their work by automating certain tasks, and always leaves the human in charge of decisions.
+  </div>
+
+  <p><a class="bouton" href="services.html">See the AI & Sensitive Data Assessment</a></p>
+</main>
+
+<footer class="pied">
+  <p class="sig">Adopt. Innovate. Secure.</p>
+  <p>AIS Conseil — Cybersecurity & AI consulting — Dieppe / Greater Moncton, New Brunswick<br>
+  <a href="contact.html">Contact us</a></p>
+</footer>
+
+</body>
+</html>

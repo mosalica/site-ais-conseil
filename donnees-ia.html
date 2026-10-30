@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vos données et l'IA — AIS Conseil | Classification et garde-fous</title>
+<meta name="description" content="Comment AIS Conseil classe vos données en quatre niveaux et protège ce que vous confiez à un agent IA : accès minimal par rôle, minimisation, journalisation, refus hors périmètre, validation humaine.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="barre">
+    <a class="logo" href="index.html">AIS <span>Conseil</span></a>
+    <div class="langue"><a href="donnees-ia.html" class="actif">FR</a> | <a href="en/data-ai.html">EN</a></div>
+  </div>
+  <nav class="principale">
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="donnees-ia.html" class="actif">Vos données et l'IA</a>
+    <a href="methode-demo.html">Méthode et démo</a>
+    <a href="a-propos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page">Vos données et l'IA</h1>
+  <p class="lead">Un agent IA ne devrait jamais voir plus que ce que sa tâche exige. C'est une question de conception, pas de confiance aveugle — et c'est exactement notre métier, issu de la gestion des identités et des accès (IAM/PAM).</p>
+
+  <h2>Quatre niveaux de données</h2>
+  <p>Chaque information confiée à un agent est classée avant le déploiement :</p>
+  <table>
+    <tr><th>Niveau</th><th>Exemples</th><th>Règle pour l'agent</th></tr>
+    <tr><td><strong>1. Publiques</strong></td><td>Horaires, services offerts, foire aux questions, informations de votre site web</td><td>Accès libre : c'est la base de travail normale de l'agent.</td></tr>
+    <tr><td><strong>2. Internes</strong></td><td>Procédures internes, modèles de documents, règles de fonctionnement</td><td>Réservées au rôle « employé » ; jamais servies au public.</td></tr>
+    <tr><td><strong>3. Personnelles</strong></td><td>Nom, coordonnées, dossier d'un client ou d'un employé</td><td>Hors périmètre par défaut : l'agent escalade vers un humain au lieu de traiter.</td></tr>
+    <tr><td><strong>4. Sensibles ou réglementées</strong></td><td>Données financières, de santé, secrets d'affaires, tarifs négociés</td><td>Jamais exposées à l'agent sans diagnostic spécifique, modèle adapté (souvent local) et validation explicite.</td></tr>
+  </table>
+
+  <h2>Cinq garde-fous, toujours</h2>
+  <div class="cartes">
+    <div class="carte"><span class="numero">1</span><h3>Accès minimal par rôle</h3><p>Chaque agent a son identité propre et n'ouvre que les documents de son rôle. Un document non autorisé pour le rôle n'est jamais servi — même si on le lui demande directement.</p></div>
+    <div class="carte"><span class="numero">2</span><h3>Minimisation</h3><p>L'agent ne demande et ne traite que les informations nécessaires à sa tâche précise. Rien de plus n'est collecté « au cas où ».</p></div>
+    <div class="carte"><span class="numero">3</span><h3>Journalisation</h3><p>Chaque réponse, chaque refus et chaque escalade est journalisé avec sa source. Vous pouvez vérifier après coup ce que l'agent a dit et pourquoi.</p></div>
+    <div class="carte"><span class="numero">4</span><h3>Refus hors périmètre</h3><p>Si l'information n'est pas dans les documents autorisés, l'agent refuse et oriente vers un humain. Il n'invente ni un prix, ni un délai, ni une politique.</p></div>
+    <div class="carte"><span class="numero">5</span><h3>Validation humaine</h3><p>Un brouillon n'est jamais un envoi. Toute action sensible — envoi, engagement, dossier personnel — passe par la décision d'un humain.</p></div>
+  </div>
+
+  <h2>Local ou en ligne ?</h2>
+  <p>Selon la sensibilité de vos données, un modèle d'IA peut tourner <strong>localement</strong>, sur un poste de votre entreprise, sans que vos informations sortent de chez vous ; ou <strong>en ligne</strong>, pour des usages où seules des informations publiques sont traitées. Le diagnostic tranche cette question avec vous, chiffres et contraintes à l'appui — ce n'est jamais un choix par défaut.</p>
+
+  <div class="principe">
+    <strong>Notre principe fondateur :</strong> l'agent ne remplace jamais l'humain. Il est au service de l'humain : il allège ses tâches en automatisant certaines actions, et laisse toujours l'humain décider.
+  </div>
+
+  <p><a class="bouton" href="services.html">Voir le diagnostic IA et données sensibles</a></p>
+</main>
+
+<footer class="pied">
+  <p class="sig">Adopter. Innover. Sécuriser.</p>
+  <p>AIS Conseil — Conseil en cybersécurité et IA — Dieppe / Grand Moncton, Nouveau-Brunswick<br>
+  <a href="contact.html">Nous contacter</a></p>
+</footer>
+
+</body>
+</html>

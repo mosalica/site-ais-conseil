@@ -1,0 +1,156 @@
+/* AIS Conseil — feuille de style commune
+   Site statique, aucune ressource externe, aucun traceur. */
+
+:root {
+  --marine: #0f2a43;
+  --marine-clair: #17456e;
+  --sarcelle: #0e7c7b;
+  --sarcelle-clair: #e6f4f3;
+  --fond: #ffffff;
+  --fond-doux: #f4f7fa;
+  --texte: #1d2733;
+  --texte-doux: #4a5a6a;
+  --bord: #d8e1ea;
+  --rayon: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color: var(--texte);
+  background: var(--fond);
+  line-height: 1.6;
+}
+
+a { color: var(--sarcelle); }
+a:hover { text-decoration: underline; }
+
+/* En-tête */
+.entete {
+  background: var(--marine);
+  color: #fff;
+}
+.entete .barre {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 24px;
+}
+.logo { font-size: 1.45rem; font-weight: 700; letter-spacing: .5px; color: #fff; text-decoration: none; }
+.logo span { color: #7fd1cf; font-weight: 400; }
+.langue { margin-left: auto; font-size: .9rem; }
+.langue a { color: #cfe3f2; text-decoration: none; }
+.langue a.actif { color: #fff; font-weight: 700; text-decoration: underline; }
+nav.principale {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+nav.principale a { color: #dbe9f5; text-decoration: none; font-size: .98rem; }
+nav.principale a:hover, nav.principale a.actif { color: #fff; text-decoration: underline; }
+
+/* Bandeau principal */
+.bandeau {
+  background: linear-gradient(135deg, var(--marine) 0%, var(--marine-clair) 100%);
+  color: #fff;
+  padding: 56px 20px 48px;
+  text-align: center;
+}
+.bandeau h1 { margin: 0 0 6px; font-size: 2.6rem; letter-spacing: 1px; }
+.bandeau .signature { font-size: 1.35rem; color: #7fd1cf; margin: 0 0 14px; font-weight: 600; }
+.bandeau .descripteur { max-width: 720px; margin: 0 auto 22px; color: #dbe9f5; font-size: 1.05rem; }
+.bouton {
+  display: inline-block;
+  background: var(--sarcelle);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: var(--rayon);
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.bouton:hover { background: #0a6362; text-decoration: none; }
+
+/* Contenu */
+main { max-width: 1080px; margin: 0 auto; padding: 34px 20px 10px; }
+h1.page { color: var(--marine); font-size: 2rem; margin: 6px 0 4px; }
+h2 { color: var(--marine); font-size: 1.45rem; margin: 34px 0 10px; }
+h3 { color: var(--marine-clair); font-size: 1.12rem; margin: 18px 0 6px; }
+p.lead { font-size: 1.08rem; color: var(--texte-doux); max-width: 780px; }
+
+.principe {
+  background: var(--sarcelle-clair);
+  border-left: 5px solid var(--sarcelle);
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  padding: 18px 22px;
+  margin: 26px 0;
+  font-size: 1.06rem;
+}
+.principe strong { color: var(--marine); }
+
+.cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 18px 0 8px; }
+.carte {
+  background: var(--fond-doux);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  padding: 20px 22px;
+}
+.carte h3 { margin-top: 0; }
+.carte .numero {
+  display: inline-block;
+  background: var(--marine);
+  color: #fff;
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  line-height: 30px; text-align: center;
+  font-weight: 700; margin-bottom: 8px;
+}
+
+table { border-collapse: collapse; width: 100%; margin: 14px 0 20px; }
+th, td { border: 1px solid var(--bord); padding: 10px 12px; text-align: left; vertical-align: top; }
+th { background: var(--marine); color: #fff; }
+tr:nth-child(even) td { background: var(--fond-doux); }
+
+ol.etapes, ul.sobre { padding-left: 22px; }
+ol.etapes li, ul.sobre li { margin-bottom: 8px; }
+
+/* Formulaire */
+form.contact { max-width: 620px; }
+form.contact label { display: block; font-weight: 600; margin: 14px 0 4px; color: var(--marine); }
+form.contact input, form.contact textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+  background: #fff;
+}
+form.contact .bouton { margin-top: 18px; }
+.note { font-size: .92rem; color: var(--texte-doux); }
+
+/* Pied de page */
+.pied {
+  background: var(--marine);
+  color: #cfe3f2;
+  margin-top: 44px;
+  padding: 26px 20px;
+  text-align: center;
+  font-size: .95rem;
+}
+.pied .sig { color: #7fd1cf; font-weight: 600; }
+.pied a { color: #cfe3f2; }
+
+@media (max-width: 640px) {
+  .bandeau h1 { font-size: 2rem; }
+  h1.page { font-size: 1.6rem; }
+}
