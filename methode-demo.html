@@ -36,6 +36,19 @@
     <li><strong>Déploiement encadré.</strong> Si le pilote le justifie, élargissement progressif à d'autres tâches ou d'autres équipes, avec les mêmes garde-fous.</li>
   </ol>
 
+  <h2 id="cadre-anssi">Un cadre reconnu : les sept principes de l'ANSSI</h2>
+  <p>En octobre 2026, l'ANSSI — l'agence nationale française de la sécurité des systèmes d'information — a publié ses recommandations pour sécuriser les systèmes d'IA agentiques (<em>Securing an Agentic AI System</em>). Notre méthode les suit point par point :</p>
+  <ul class="sobre">
+    <li><strong>1. Évaluer les risques dès la conception</strong> — tout projet commence par l'inventaire des données que l'IA pourra voir et utiliser.</li>
+    <li><strong>2. Limiter l'autonomie</strong> — l'agent agit dans un périmètre documenté, élargi progressivement et jamais par défaut.</li>
+    <li><strong>3. Classer les actions</strong> — ce que l'agent peut faire seul, ce qui exige votre approbation, ce qui lui est interdit.</li>
+    <li><strong>4. Isoler les environnements</strong> — développement, tests et production séparés, avec des accès distincts.</li>
+    <li><strong>5. Vérifier l'autorisation hors du modèle</strong> — les accès sont contrôlés par le code et par les rôles, jamais par l'agent lui-même ; hors cadre, la réponse est un refus.</li>
+    <li><strong>6. Contenir l'impact</strong> — aucun secret confié à l'agent, interactions limitées, arrêt et reprise prévus.</li>
+    <li><strong>7. Garder un contrôle démontrable</strong> — journaux d'activité et tests de sécurité que vous pouvez vérifier.</li>
+  </ul>
+  <p class="note">Ces recommandations ne sont pas une certification : nous les appliquons comme grille de conception, et nous nommons honnêtement ce qui se met en place au fil d'un pilote.</p>
+
   <h2>La démo de 15 minutes</h2>
   <p>Nous présentons notre agent en démonstration, sur des documents entièrement fictifs : vous le verrez répondre en citant ses sources, refuser ce qui sort de son périmètre — y compris une tentative de lui faire « ignorer ses règles » — et escalader un cas sensible vers un humain avec un brouillon prêt à valider. C'est la meilleure façon de juger notre approche avant tout engagement.</p>
   <p class="note">Cas présenté en démonstration : un agent d'accueil pour les questions générales des familles nouvellement arrivées, développé dans le cadre d'échanges d'exploration avec le milieu scolaire francophone du Sud du Nouveau-Brunswick, à partir d'informations publiques et de documents fictifs. Aucune donnée réelle de familles ou d'élèves n'est utilisée.</p>
