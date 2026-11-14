@@ -1,6 +1,6 @@
 # Camara Conseil — site vitrine
 
-Site statique bilingue (FR/EN) d'Camara Conseil, conseil en cybersécurité et en IA à Dieppe / Moncton (Nouveau-Brunswick).
+Site statique bilingue (FR/EN) de Camara Conseil, conseil en cybersécurité et en IA à Dieppe / Moncton (Nouveau-Brunswick).
 
 Signature : Adopter. Innover. Sécuriser. / Adopt. Innovate. Secure.
 
@@ -8,9 +8,10 @@ Principe fondateur : « L'agent ne remplace jamais l'humain. Il est au service d
 
 ## Structure
 
-- Pages françaises à la racine : `index.html`, `services.html`, `donnees-ia.html`, `methode-demo.html`, `a-propos.html`, `contact.html`
-- Pages anglaises dans `en/` : `index.html`, `services.html`, `data-ai.html`, `method-demo.html`, `about.html`, `contact.html`
+- Pages françaises à la racine : `index.html`, `services.html`, `donnees-ia.html`, `methode-demo.html`, `notre-approche.html`, `a-propos.html`, `contact.html`
+- Pages anglaises dans `en/` : `index.html`, `services.html`, `data-ai.html`, `method-demo.html`, `our-approach.html`, `about.html`, `contact.html`
 - `styles.css` : feuille de style unique, aucune ressource externe, aucun traceur
+- `images/` : les 4 panneaux du storyboard « fraude à la facturation » (panneaux 1, 2, 3 et 6 ; les panneaux 4 et 5 sont des sorties terminales en vrai texte dans les pages)
 - `CNAME` : domaine personnalisé GitHub Pages — camaraconseil.ca
 
 ## Mise en ligne

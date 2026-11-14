@@ -154,3 +154,42 @@ form.contact .bouton { margin-top: 18px; }
   .bandeau h1 { font-size: 2rem; }
   h1.page { font-size: 1.6rem; }
 }
+
+/* Storyboard et démos visuelles */
+figure { margin: 22px 0; }
+figure img { max-width: 100%; height: auto; display: block; border-radius: var(--rayon); border: 1px solid var(--bord); }
+figcaption { font-size: .95rem; color: var(--texte-doux); margin-top: 8px; }
+figcaption strong { color: var(--marine); }
+
+/* Bloc terminal (sorties de démonstration, en vrai texte) */
+.terminal {
+  background: var(--marine);
+  color: #cfe3f2;
+  border-radius: var(--rayon);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: .9rem;
+  line-height: 1.55;
+  margin: 14px 0;
+  white-space: pre-wrap;
+}
+
+/* Chemin : la rampe présentée comme un parcours, pas un menu */
+ol.chemin { list-style: none; padding-left: 0; counter-reset: etape; }
+ol.chemin li {
+  counter-increment: etape;
+  position: relative;
+  padding: 14px 18px 14px 58px;
+  background: var(--fond-doux);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  margin-bottom: 12px;
+}
+ol.chemin li::before {
+  content: counter(etape);
+  position: absolute; left: 14px; top: 12px;
+  background: var(--sarcelle); color: #fff;
+  border-radius: 50%; width: 30px; height: 30px;
+  line-height: 30px; text-align: center; font-weight: 700;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notre approche — Camara Conseil | Des agents qui refusent plutôt que d'obéir aveuglément</title>
+<meta name="description" content="L'approche de Camara Conseil : des assistants IA gérés comme des comptes à accès sensibles — identité propre, droits minimaux, validation humaine, journal complet. Souveraineté des données, test des défenses sous mandat, alignement OWASP.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="barre">
+    <a class="logo" href="index.html">Camara <span>Conseil</span></a>
+    <div class="langue"><a href="notre-approche.html" class="actif">FR</a> | <a href="en/our-approach.html">EN</a></div>
+  </div>
+  <nav class="principale">
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="donnees-ia.html">Vos données et l'IA</a>
+    <a href="methode-demo.html">Méthode et démo</a>
+    <a href="notre-approche.html" class="actif">Notre approche</a>
+    <a href="a-propos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="page">Notre approche</h1>
+  <p class="lead">Avant tout projet, on fixe le cadre : ce que l'assistant peut voir, ce qu'il peut faire seul, et ce qui exige toujours votre décision. Vous gardez le contrôle, l'assistant prépare le travail — et tout ce qu'il fait est vérifiable. Voici comment, concrètement.</p>
+
+  <div class="principe">
+    <strong>Notre principe fondateur :</strong> l'agent ne remplace jamais l'humain. Il est au service de l'humain : il allège ses tâches en automatisant certaines actions, et laisse toujours l'humain décider.
+  </div>
+
+  <h2>Le socle : cinq garde-fous, avant toute fonction</h2>
+  <p>Concrètement, nous gérons chaque assistant comme un compte à accès sensibles : on sait qui il est, ce qu'il a le droit de faire, et on garde la trace de tout ce qu'il fait. Ces cinq garde-fous sont en place avant que l'assistant touche à quoi que ce soit chez vous :</p>
+  <ul class="sobre">
+    <li><strong>1. Une identité propre par assistant</strong> — chacun a son propre nom et ses propres accès : on sait toujours lequel a fait quoi, comme un employé avec son propre badge.</li>
+    <li><strong>2. Des droits minimaux, déclarés à l'avance</strong> — chaque assistant n'a accès qu'à la liste précise des outils et des documents que vous avez validés. Rien d'autre, jamais par défaut.</li>
+    <li><strong>3. Des actions classées</strong> — ce que l'assistant peut faire seul, ce qui exige votre approbation, ce qui lui est interdit. C'est écrit avant le démarrage, pas découvert après.</li>
+    <li><strong>4. Une validation humaine pour le sensible</strong> — payer, envoyer, modifier, tester vos défenses : tout ce qui compte passe par un humain qui décide. L'assistant prépare, il ne tranche pas.</li>
+    <li><strong>5. Un journal complet</strong> — tout est noté, et vous pouvez le consulter : qui a fait quoi, quand, avec quelles données.</li>
+  </ul>
+  <p>Le résultat : un assistant qui refuse ce qui sort de son cadre — y compris une instruction cachée dans un document — plutôt que d'obéir aveuglément. <a href="methode-demo.html#demo-fraude">Voir le refus en action dans la démo</a>.</p>
+
+  <h2>Vos données restent chez vous, vous gardez les clés</h2>
+  <p>Nos agents sont déployés chez vous, dans vos systèmes : vos données restent hébergées et contrôlées au Canada, sans dépendance à un cloud d'éditeur étranger. Le diagnostic vous remet la fiche souveraineté d'une page — où vivent vos données, de qui vous dépendez, qui garde les clés. <a href="donnees-ia.html">Voir comment nous protégeons vos données</a>.</p>
+
+  <h2>On teste vos défenses en jouant l'attaquant — sous mandat, avec un humain qui décide</h2>
+  <p>Raisonner comme un adversaire, c'est le meilleur moyen de trouver vos failles avant les fraudeurs — à condition de le faire dans un cadre écrit, avec un humain qui décide à chaque étape. Concrètement : on observe seulement (ce qu'on appelle la reconnaissance), jamais d'exploitation autonome ; le test se fait sur une copie de vos systèmes, jamais sur vos vrais outils sans votre accord écrit ; puis on trie les alertes par ordre de gravité et on corrige, ensemble.</p>
+  <p>Au labo, sur des exemples fictifs : <strong>62 tests réussis sur 62</strong> quand on joue l'attaquant, <strong>18 sur 18</strong> pour le tri des alertes. Aucun test sur vos vrais systèmes sans votre accord écrit qui fixe le cadre.</p>
+
+  <h2>Alignés sur le Top 10 OWASP pour les applications LLM (2026)</h2>
+  <p>Notre méthode est alignée sur le Top 10 OWASP pour les applications LLM (édition 2026, publiée par le projet OWASP GenAI Security) — la liste de référence des principaux risques des applications d'IA. Nos garde-fous répondent directement aux risques en tête de liste : l'injection d'instructions cachées dans les documents (LLM01), la divulgation d'informations sensibles (LLM02) et l'excès d'autonomie accordée à l'agent (LLM03) — d'où le refus hors périmètre, l'accès minimal par rôle, la validation humaine et la journalisation.</p>
+  <p class="note">Il s'agit d'un alignement, pas d'une certification : OWASP ne certifie pas. Nous utilisons cette liste comme grille de vérification, et nous nommons honnêtement ce qui est en place et ce qui reste à mettre en place chez vous.</p>
+
+  <h2>Par où commencer</h2>
+  <p>Le point de départ, c'est le <a href="services.html">Diagnostic IA et données sensibles</a> : en 3 à 5 jours, vous savez ce que votre IA peut voir — et ce qu'elle ne doit jamais voir — avec les garde-fous écrits et la fiche souveraineté d'une page que vous gardez. 2 950 $ ou 4 950 $ selon la taille, crédité sur votre premier déploiement.</p>
+  <p><a class="bouton" href="services.html">Commencer par le diagnostic</a></p>
+</main>
+
+<footer class="pied">
+  <p class="sig">Adopter. Innover. Sécuriser.</p>
+  <p>Camara Conseil — Conseil en cybersécurité et IA — Dieppe / Grand Moncton, Nouveau-Brunswick<br>
+  <a href="contact.html">Nous contacter</a> · <a href="https://www.linkedin.com/company/aisconseil/">LinkedIn</a> · <a href="https://www.facebook.com/aisconseil">Facebook</a> · <a href="https://www.instagram.com/aisconseil.ca/">Instagram</a></p>
+</footer>
+
+</body>
+</html>
