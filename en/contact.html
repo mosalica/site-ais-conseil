@@ -30,12 +30,13 @@
   <p class="lead">A first 15-minute conversation is often enough to know whether AI can help you — and what must be protected before starting. Just tell us where you stand.</p>
 
   <!-- The form will be connected to the receiving service when the site goes live. -->
-  <form class="contact" method="post" action="#">
+  <form class="contact" method="post" action="https://formspree.io/f/xaeoqzle">
+  <input type="hidden" name="_subject" value="New message - camaraconseil.ca">
     <label for="nom">Your name</label>
     <input id="nom" name="nom" type="text" required>
 
     <label for="courriel">Your email</label>
-    <input id="courriel" name="courriel" type="email" required>
+    <input id="courriel" name="email" type="email" required>
 
     <label for="telephone">Your phone (optional)</label>
     <input id="telephone" name="telephone" type="tel" autocomplete="tel">

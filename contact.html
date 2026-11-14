@@ -30,12 +30,13 @@
   <p class="lead">Un premier échange de 15 minutes suffit souvent à savoir si l'IA peut vous aider — et ce qu'il faut protéger avant de commencer. Dites-nous simplement où vous en êtes.</p>
 
   <!-- Le formulaire sera branché au service de réception lors de la mise en ligne. -->
-  <form class="contact" method="post" action="#">
+  <form class="contact" method="post" action="https://formspree.io/f/xaeoqzle">
+  <input type="hidden" name="_subject" value="Nouveau message - camaraconseil.ca">
     <label for="nom">Votre nom</label>
     <input id="nom" name="nom" type="text" required>
 
     <label for="courriel">Votre courriel</label>
-    <input id="courriel" name="courriel" type="email" required>
+    <input id="courriel" name="email" type="email" required>
 
     <label for="telephone">Votre téléphone (facultatif)</label>
     <input id="telephone" name="telephone" type="tel" autocomplete="tel">
