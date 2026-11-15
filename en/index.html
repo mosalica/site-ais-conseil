@@ -7,14 +7,16 @@
 <meta name="description" content="Camara Conseil helps Greater Moncton businesses adopt AI, innovate their services and secure the data entrusted to AI agents. AI & sensitive data assessment, secured AI agents, ongoing support.">
 <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
+<body class="accueil">
 
 <header class="entete">
+  <input class="menu-case" type="checkbox" id="menu-case" aria-label="Show or hide the menu">
   <div class="barre">
     <a class="logo" href="index.html">Camara <span>Conseil</span></a>
+    <label class="menu-bouton" for="menu-case">Menu</label>
     <div class="langue"><a href="../index.html">FR</a> | <a href="index.html" class="actif">EN</a></div>
   </div>
-  <nav class="principale">
+  <nav class="principale" id="nav-principale">
     <a href="index.html" class="actif">Home</a>
     <a href="services.html">Services</a>
     <a href="data-ai.html">Your Data & AI</a>
@@ -26,17 +28,47 @@
 </header>
 
 <div class="bandeau">
-  <h1>Camara Conseil</h1>
-  <p class="signature">Adopt. Innovate. Secure.</p>
-  <p class="descripteur">You save time, you avoid losses, you stay in control. We set up digital assistants that prepare repetitive work — and you always decide. Cybersecurity and artificial intelligence consulting for businesses in Greater Moncton.</p>
-  <a class="bouton" href="services.html">Start with the assessment</a>
+  <div class="bandeau-grille">
+    <div class="bandeau-texte">
+      <h1>Camara Conseil</h1>
+      <p class="signature">Adopt. Innovate. Secure.</p>
+      <p class="descripteur">You save time, you avoid losses, you stay in control. We set up digital assistants that prepare repetitive work — and you always decide. Cybersecurity and artificial intelligence consulting for businesses in Greater Moncton.</p>
+      <p class="bandeau-actions">
+        <a class="bouton" href="services.html">Start with the assessment</a>
+        <a class="bouton bouton-secondaire" href="#demo">See the demo</a>
+      </p>
+    </div>
+    <div class="collage">
+      <img src="../images/hero-ops.jpg" width="1200" height="800" alt="Analyst seen from behind, facing monitoring screens in a security operations centre.">
+      <img src="../images/hero-serveur.jpg" width="1200" height="800" alt="Aisle of server racks in a data centre.">
+      <img src="../images/hero-equipe.jpg" width="1200" height="800" alt="A small team working together around a whiteboard in a bright office.">
+      <p class="pastille">Lab tests — 97 passed out of 97</p>
+    </div>
+  </div>
 </div>
+
+<ul class="bande-mots" aria-label="What we guarantee">
+  <li class="mot actif">Verified invoice</li>
+  <li class="mot">Your data stays home</li>
+  <li class="mot">The human decides</li>
+  <li class="mot">Supervised agents</li>
+  <li class="mot">Lab tested</li>
+  <li class="mot">Written mandate</li>
+</ul>
 
 <main>
   <p>An AI agent is a computer program that answers your questions and prepares certain tasks for you.</p>
 
   <div class="principe">
     <strong>Our founding principle:</strong> the agent never replaces the human. It serves the human: it lightens their work by automating certain tasks, and always leaves the human in charge of decisions.
+  </div>
+
+  <div class="chiffres" aria-label="Lab test results">
+    <div class="chiffre"><span class="compteur" data-cible="97">97</span><span class="chiffre-total">/97</span><span class="chiffre-legende">lab tests passed</span></div>
+    <div class="chiffre"><span class="compteur" data-cible="62">62</span><span class="chiffre-total">/62</span><span class="chiffre-legende">reconnaissance</span></div>
+    <div class="chiffre"><span class="compteur" data-cible="18">18</span><span class="chiffre-total">/18</span><span class="chiffre-legende">alert triage</span></div>
+    <div class="chiffre"><span class="compteur" data-cible="5">5</span><span class="chiffre-total">/5</span><span class="chiffre-legende">invoice payment</span></div>
+    <div class="chiffre"><span class="compteur" data-cible="12">12</span><span class="chiffre-total">/12</span><span class="chiffre-legende">welcome agent</span></div>
   </div>
 
   <p>Before we propose anything at your place, we test everything at ours, using fictitious examples: <strong>97 tests passed out of 97 in the lab</strong>, including the full exercise where we play the attacker, then fix what we find. <a href="method-demo.html">See the tests in detail</a>.</p>
@@ -69,11 +101,25 @@
     </div>
   </div>
 
-  <h2>A rigged invoice, a payment kept safe</h2>
-  <figure>
-    <img src="../images/panneau-1-facture-ordinaire.png" alt="An ordinary invoice lying on a desk — it looks normal.">
-    <figcaption><strong>An invoice arrives. It looks normal.</strong></figcaption>
-  </figure>
+  <h2 id="demo">A rigged invoice, a payment kept safe</h2>
+  <div class="demo-terminal">
+    <div class="terminal-fenetre">
+      <div class="terminal-barre"><span class="terminal-point"></span><span class="terminal-point"></span><span class="terminal-point"></span><span class="terminal-titre">invoice-assistant</span></div>
+      <pre class="terminal terminal-ecran" id="terminal-ecran" data-etapes="0,3,4,5">$ invoice-assistant --check invoice-1147.pdf
+Reading the invoice… $470.00
+Hidden line detected: "use this new IBAN"
+Account check… IBAN not in your validated contacts
+RESULT: PAYMENT BLOCKED
+Draft prepared on the right account — awaiting your approval
+Attempt logged.</pre>
+    </div>
+    <ol class="demo-etapes" aria-label="Demo steps">
+      <li class="actif">Reading the invoice</li>
+      <li>Account check</li>
+      <li>Payment blocked</li>
+      <li>Human approval</li>
+    </ol>
+  </div>
   <p class="lead">Except a hidden line asks to use "this new IBAN". Our assistant does not trust the document: it checks your validated contact list, refuses the change, and still prepares the right payment, to the right account, awaiting your approval. In the demo, $470 stays in the right account and the attempt is logged. Without the assistant, it goes to the fraudster, without a trace.</p>
   <p class="note">Demo on a fictitious mirror, in the lab. In real life: assessment first, then an authorized evaluation, with a signed mandate. $470 is the amount of the demo's fictitious invoice: an illustration, not a promise of savings.</p>
   <p><a href="method-demo.html#demo-fraude">See the demo in pictures, step by step</a></p>
@@ -105,11 +151,11 @@
   <p><a href="data-ai.html">See how we protect your data</a></p>
 
   <h2>A four-step method</h2>
-  <ol class="etapes">
-    <li><strong>Assessment</strong> — your data, your repetitive tasks, your risks.</li>
-    <li><strong>Prototype</strong> — an agent tested on fictitious documents, never on your real data.</li>
-    <li><strong>Measured pilot</strong> — 4 to 6 weeks under framed real conditions, before/after results compared.</li>
-    <li><strong>Framed deployment</strong> — gradual expansion, human validation maintained.</li>
+  <ol class="methode">
+    <li><span class="anneau" aria-hidden="true">1</span><div><strong>Assessment</strong> — your data, your repetitive tasks, your risks.</div></li>
+    <li><span class="anneau" aria-hidden="true">2</span><div><strong>Prototype</strong> — an agent tested on fictitious documents, never on your real data.</div></li>
+    <li><span class="anneau" aria-hidden="true">3</span><div><strong>Measured pilot</strong> — 4 to 6 weeks under framed real conditions, before/after results compared.</div></li>
+    <li><span class="anneau" aria-hidden="true">4</span><div><strong>Framed deployment</strong> — gradual expansion, human validation maintained.</div></li>
   </ol>
   <p><a href="method-demo.html">Our method and the 15-minute demo</a></p>
 </main>
@@ -120,5 +166,6 @@
   <a href="contact.html">Contact us</a> · <a href="https://www.linkedin.com/company/camaraconseil/">LinkedIn</a> · <a href="https://www.facebook.com/camaraconseil">Facebook</a> · <a href="https://www.instagram.com/camaraconseil.ca/">Instagram</a></p>
 </footer>
 
+<script src="../demo-terminal.js" defer></script>
 </body>
 </html>
