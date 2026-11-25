@@ -1,0 +1,1006 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Démo interactive — Vous êtes le comptable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700;8..60,900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      :root {
+        --marine: #0f2a43;
+        --marine-deep: #0a1e31;
+        --marine-soft: #1b3d5c;
+        --teal: #0e7c7b;
+        --teal-dark: #0a5f5e;
+        --teal-soft: #e2f1f0;
+        --cream: #faf6f0;
+        --paper: #fffdf8;
+        --ink: #1d2c3a;
+        --muted: #5d6d7c;
+        --line: #e2dacb;
+        --danger: #b3372e;
+        --danger-dark: #8f2a23;
+        --danger-bg: #fbeae7;
+        --ok: #166b45;
+        --ok-bg: #e4f3ea;
+        --amber: #9a6a0d;
+        --amber-bg: #fdf2da;
+        --shadow: 0 14px 34px rgba(15, 42, 67, .13);
+        --radius: 16px;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --cream: #0a1e31;
+          --paper: #10293f;
+          --ink: #f2ede2;
+          --muted: #a9b8c4;
+          --line: #27455f;
+          --teal-soft: #123a3a;
+          --danger-bg: #3d1f1c;
+          --ok-bg: #173527;
+          --amber-bg: #3a2f14;
+          --shadow: 0 14px 34px rgba(0, 0, 0, .45);
+          color-scheme: dark;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: ui-sans-system, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 18px 72px; }
+
+      h1, h2, .serif { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+      /* ---------- Bandeau démo ---------- */
+      .demo-flag {
+        position: sticky; top: 0; z-index: 50;
+        background: var(--marine); color: #f5efe2;
+        font-size: .82rem; letter-spacing: .04em;
+        padding: 8px 14px; font-weight: 600;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        box-shadow: 0 4px 18px rgba(10, 30, 49, .22);
+      }
+      .demo-flag .flag-text { flex: 1; text-align: center; line-height: 1.3; }
+      .demo-flag .dot { color: #ffb454; }
+      .btn-restart {
+        appearance: none; border: 0; cursor: pointer; font: inherit;
+        background: #ffb454; color: #0a1e31; font-weight: 800; font-size: .88rem; letter-spacing: .01em;
+        border-radius: 999px; padding: 9px 16px; min-height: 40px; white-space: nowrap; flex: none;
+        display: inline-flex; align-items: center; gap: 7px;
+        box-shadow: 0 4px 14px rgba(0,0,0,.22);
+        transition: background .15s ease, transform .12s ease;
+      }
+      .btn-restart:hover { background: #ffc06e; }
+      .btn-restart:active { transform: scale(.97); }
+      .btn-restart:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+      @media (max-width: 560px) {
+        .demo-flag { padding: 8px 10px; gap: 8px; }
+        .demo-flag .flag-text { font-size: .74rem; text-align: left; }
+        .btn-restart { padding: 9px 14px; font-size: .86rem; }
+      }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 44px 0 8px; text-align: center; }
+      .hero .kicker {
+        display: inline-block; font-size: .8rem; font-weight: 700; letter-spacing: .14em;
+        text-transform: uppercase; color: var(--teal-dark);
+        border: 1.5px solid var(--teal); border-radius: 999px; padding: 6px 14px;
+        background: var(--teal-soft);
+      }
+      @media (prefers-color-scheme: dark) { .hero .kicker { color: #7fd1cf; } }
+      .hero h1 { font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.08; margin: 20px 0 12px; font-weight: 900; color: var(--marine); }
+      @media (prefers-color-scheme: dark) { .hero h1 { color: #f2ede2; } }
+      .hero h1 em { font-style: italic; color: var(--teal); }
+      .hero p.lede { font-size: 1.13rem; color: var(--muted); max-width: 620px; margin: 0 auto; }
+      .hero p.lede strong { color: var(--ink); }
+
+      .scene-clock {
+        display: inline-flex; align-items: center; gap: 12px; margin-top: 26px;
+        background: var(--marine); color: #f5efe2; border-radius: 14px; padding: 12px 20px;
+        box-shadow: var(--shadow);
+      }
+      .scene-clock .time { font-family: "IBM Plex Mono", monospace; font-size: 1.5rem; font-weight: 600; letter-spacing: .03em; }
+      .scene-clock .lbl { font-size: .85rem; line-height: 1.3; text-align: left; opacity: .85; }
+
+      /* ---------- Progression ---------- */
+      .progress {
+        display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 30px 0 6px;
+      }
+      .progress .chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        border: 1.5px solid var(--line); background: var(--paper); color: var(--muted);
+        border-radius: 999px; padding: 8px 14px; font-size: .86rem; font-weight: 600;
+      }
+      .progress .chip .n {
+        width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+        background: var(--line); color: var(--ink); font-size: .78rem; font-weight: 800; flex: none;
+      }
+      .progress .chip.done { border-color: var(--teal); color: var(--ink); }
+      .progress .chip.done .n { background: var(--teal); color: #fff; }
+      .progress .chip.done.bad { border-color: var(--danger); }
+      .progress .chip.done.bad .n { background: var(--danger); }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 44px; }
+      .sec-head { text-align: center; max-width: 640px; margin: 0 auto 22px; }
+      .sec-head h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 8px; font-weight: 700; color: var(--marine); }
+      @media (prefers-color-scheme: dark) { .sec-head h2 { color: #f2ede2; } }
+      .sec-head p { color: var(--muted); margin: 0; }
+
+      /* ---------- Maquettes (écrans "presque réels") ---------- */
+      .mock {
+        background: #ffffff; color: #22303c;
+        border: 1px solid #ddd5c3; border-radius: var(--radius);
+        box-shadow: var(--shadow); overflow: hidden; text-align: left;
+      }
+      .mock-bar {
+        display: flex; align-items: center; gap: 7px;
+        background: #f2eee1; border-bottom: 1px solid #e3dcc9;
+        padding: 10px 14px;
+      }
+      .mock-bar .d { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+      .mock-bar .d.r { background: #e0655a; } .mock-bar .d.y { background: #eec04f; } .mock-bar .d.g { background: #63b06a; }
+      .mock-bar .t { margin-left: 8px; font-size: .82rem; font-weight: 600; color: #6b6250; }
+      .mock-body { padding: 20px 22px 22px; }
+      @media (max-width: 560px) { .mock-body { padding: 16px 15px 18px; } }
+
+      .mail-head { display: flex; gap: 13px; align-items: flex-start; padding-bottom: 14px; border-bottom: 1px solid #eceadf; }
+      .avatar {
+        width: 44px; height: 44px; border-radius: 50%; flex: none;
+        background: #0f2a43; color: #fff; display: grid; place-items: center;
+        font-weight: 700; font-size: .95rem;
+      }
+      .avatar.red { background: #b3372e; }
+      .mail-head .who { flex: 1; min-width: 0; }
+      .mail-head .who .name { font-weight: 700; font-size: 1rem; }
+      .mail-head .who .addr { font-size: .83rem; color: #71808e; word-break: break-all; }
+      .mail-head .when { font-size: .8rem; color: #71808e; white-space: nowrap; }
+      .mail-subject { font-weight: 700; font-size: 1.06rem; margin: 14px 0 8px; }
+      .mail-body p { margin: 0 0 10px; font-size: .97rem; }
+      .mail-body .iban-box {
+        background: #fdf6e3; border: 1.5px dashed #c9a227; border-radius: 10px;
+        padding: 12px 14px; margin: 12px 0; font-size: .95rem;
+      }
+      .mail-body .iban-box .lab { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8a6d14; display: block; margin-bottom: 3px; }
+      .attach {
+        display: flex; align-items: center; gap: 12px; margin-top: 14px;
+        border: 1px solid #e0d9c6; border-radius: 10px; padding: 11px 14px; background: #fbf9f2;
+      }
+      .attach .pdf {
+        background: #b3372e; color: #fff; font-weight: 800; font-size: .72rem;
+        border-radius: 6px; padding: 5px 8px; letter-spacing: .05em; flex: none;
+      }
+      .attach .fn { font-size: .9rem; font-weight: 600; }
+      .attach .fs { font-size: .78rem; color: #71808e; }
+
+      /* Facture */
+      .invoice { border: 1.5px solid #d8d2c0; border-radius: 10px; padding: 20px; background: #fffef9; }
+      @media (max-width: 560px) { .invoice { padding: 15px; } }
+      .invoice .inv-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 2.5px solid #0f2a43; padding-bottom: 12px; }
+      .invoice .biz { font-weight: 800; font-size: 1.15rem; color: #0f2a43; letter-spacing: .01em; }
+      .invoice .biz small { display: block; font-weight: 500; font-size: .8rem; color: #71808e; margin-top: 2px; }
+      .invoice .inv-no { text-align: right; font-size: .86rem; color: #45545f; }
+      .invoice .inv-no b { display: block; font-size: 1rem; color: #22303c; }
+      .invoice table { width: 100%; border-collapse: collapse; margin: 14px 0 6px; font-size: .93rem; }
+      .invoice th { text-align: left; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: #71808e; padding: 6px 4px; border-bottom: 1px solid #e6e1d0; }
+      .invoice td { padding: 9px 4px; border-bottom: 1px solid #f0ebdb; vertical-align: top; }
+      .invoice td.r, .invoice th.r { text-align: right; }
+      .invoice .total { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 4px 2px; font-size: 1.05rem; }
+      .invoice .total b { font-size: 1.35rem; color: #0f2a43; }
+      .invoice .pay-note { margin-top: 12px; background: #eef4f4; border-radius: 8px; padding: 10px 12px; font-size: .88rem; }
+      .invoice .pay-note .mono { font-weight: 600; }
+
+      /* Écran de paiement */
+      .pay-field { margin-bottom: 13px; }
+      .pay-field label { display: block; font-size: .76rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #71808e; margin-bottom: 5px; }
+      .pay-field .val {
+        border: 1.5px solid #d8d2c0; border-radius: 9px; padding: 11px 13px;
+        font-size: 1rem; background: #fcfaf3; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      }
+      .pay-field .val.amount { font-size: 1.3rem; font-weight: 800; color: #0f2a43; }
+      .pay-field .val .tag { font-size: .72rem; font-weight: 700; background: #fdf2da; color: #9a6a0d; border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+      .bank-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+      .bank-head .logo { width: 34px; height: 34px; border-radius: 9px; background: #0f2a43; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .8rem; }
+      .bank-head .bt { font-weight: 700; }
+      .bank-head .bs { font-size: .8rem; color: #71808e; }
+
+      /* Boutons */
+      .btn {
+        appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 700;
+        border-radius: 12px; padding: 13px 22px; min-height: 48px;
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+        transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+        text-decoration: none; text-align: center;
+      }
+      .btn:active { transform: scale(.98); }
+      .btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+      .btn-teal { background: var(--teal); color: #fff; box-shadow: 0 8px 20px rgba(14,124,123,.28); }
+      .btn-teal:hover { background: var(--teal-dark); }
+      .btn-marine { background: var(--marine); color: #f5efe2; }
+      .btn-marine:hover { background: var(--marine-soft); }
+      .btn-danger { background: var(--danger); color: #fff; box-shadow: 0 8px 20px rgba(179,55,46,.25); }
+      .btn-danger:hover { background: var(--danger-dark); }
+      .btn-outline-danger { background: transparent; color: var(--danger); border: 2px solid var(--danger); }
+      .btn-outline-danger:hover { background: var(--danger-bg); }
+      .btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--line); font-weight: 600; }
+      .btn-ghost:hover { color: var(--ink); border-color: var(--muted); }
+      .btn[disabled] { opacity: .55; cursor: default; box-shadow: none; }
+      .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+      .btn-row .btn { flex: 1 1 200px; }
+      .center { text-align: center; }
+
+      /* Étapes */
+      .step { display: none; }
+      .step.on { display: block; animation: rise .45s ease both; }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .step.on { animation: none; }
+        .btn { transition: none; }
+      }
+      .step + .step { margin-top: 18px; }
+
+      .narration {
+        display: flex; gap: 12px; align-items: flex-start;
+        background: var(--teal-soft); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px;
+        font-size: .98rem;
+      }
+      .narration .ic { font-size: 1.25rem; line-height: 1.2; flex: none; }
+      .narration p { margin: 0; }
+      .narration.warn { background: var(--amber-bg); }
+      .narration.bad { background: var(--danger-bg); }
+
+      /* Cartes destin */
+      .destin {
+        background: var(--paper); border: 1.5px solid var(--line); border-radius: 20px;
+        padding: 26px 24px 28px; box-shadow: var(--shadow); margin-top: 26px;
+      }
+      @media (max-width: 560px) { .destin { padding: 20px 15px 22px; } }
+      .destin-head { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 6px; }
+      .destin-num {
+        width: 46px; height: 46px; border-radius: 14px; flex: none; display: grid; place-items: center;
+        font-family: "Source Serif 4", serif; font-weight: 900; font-size: 1.3rem; color: #fff; background: var(--marine);
+      }
+      .destin.d2 .destin-num { background: #5b4a8a; }
+      .destin.d3 .destin-num { background: var(--teal); }
+      .destin-head h3 { margin: 0; font-family: "Source Serif 4", serif; font-size: 1.45rem; line-height: 1.15; color: var(--marine); }
+      @media (prefers-color-scheme: dark) { .destin-head h3 { color: #f2ede2; } }
+      .destin-head .sub { color: var(--muted); font-size: .95rem; margin-top: 3px; }
+      .destin-intro { color: var(--muted); margin: 10px 0 18px; }
+      .destin-intro strong { color: var(--ink); }
+
+      /* Flux d'argent */
+      .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0 2px; }
+      .flow .node {
+        border: 1.5px solid #d8d2c0; background: #fcfaf3; border-radius: 10px;
+        padding: 9px 13px; font-size: .9rem; font-weight: 600; color: #22303c;
+      }
+      .flow .node.bad { border-color: #b3372e; background: #fbeae7; color: #8f2a23; }
+      .flow .node.good { border-color: #166b45; background: #e4f3ea; color: #166b45; }
+      .flow .arrow { color: #98a4ae; font-weight: 800; }
+      .flow .amt { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: .85rem; background: #0f2a43; color: #fff; border-radius: 999px; padding: 4px 11px; }
+
+      /* Appel téléphonique */
+      .call {
+        background: var(--marine); color: #f5efe2; border-radius: var(--radius);
+        padding: 20px 22px; box-shadow: var(--shadow);
+      }
+      .call .call-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+      .call .avatar { background: #b3372e; }
+      .call .ct { font-weight: 700; }
+      .call .cs { font-size: .82rem; opacity: .75; }
+      .call blockquote { margin: 0; font-size: 1.05rem; line-height: 1.5; font-style: italic; }
+      .call .day { display: inline-block; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: rgba(255,255,255,.14); border-radius: 999px; padding: 4px 11px; margin-bottom: 12px; }
+
+      /* Panneau assistant / agent */
+      .chat { display: flex; flex-direction: column; gap: 11px; }
+      .msg { max-width: 88%; border-radius: 14px; padding: 12px 15px; font-size: .96rem; line-height: 1.45; }
+      .msg.user { align-self: flex-end; background: #0f2a43; color: #f5efe2; border-bottom-right-radius: 4px; }
+      .msg.bot { align-self: flex-start; background: #f2eee1; color: #22303c; border: 1px solid #e3dcc9; border-bottom-left-radius: 4px; }
+      .msg.bot .who { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: #71808e; margin-bottom: 4px; }
+      .msg .check { color: #0e7c7b; font-weight: 800; }
+      .msg .cross { color: #b3372e; font-weight: 800; }
+      .typing { display: none; align-self: flex-start; background: #f2eee1; border: 1px solid #e3dcc9; border-radius: 14px; padding: 12px 16px; }
+      .typing.on { display: block; }
+      .typing span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #98a4ae; margin-right: 3px; animation: blink 1s infinite; }
+      .typing span:nth-child(2) { animation-delay: .18s; } .typing span:nth-child(3) { animation-delay: .36s; }
+      @keyframes blink { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { .typing span { animation: none; } }
+
+      .timer-chip {
+        display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+        background: var(--danger-bg); color: var(--danger-dark); font-weight: 700; font-size: .9rem;
+        border-radius: 999px; padding: 8px 15px;
+      }
+      @media (prefers-color-scheme: dark) { .timer-chip { color: #f0a49d; } }
+
+      /* Alerte agent */
+      .alert-box {
+        border: 2px solid var(--danger); background: var(--danger-bg); border-radius: 14px; padding: 18px;
+      }
+      .alert-box .a-title { display: flex; gap: 10px; align-items: center; font-weight: 800; color: var(--danger-dark); font-size: 1.05rem; margin-bottom: 12px; }
+      @media (prefers-color-scheme: dark) { .alert-box .a-title { color: #f0a49d; } }
+      .iban-compare { display: grid; gap: 9px; }
+      .iban-row {
+        display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+        background: #fff; border: 1px solid #e0d9c6; border-radius: 10px; padding: 11px 14px; color: #22303c;
+      }
+      .iban-row .lab { font-size: .85rem; font-weight: 600; color: #5d6d7c; }
+      .iban-row .digits { font-family: "IBM Plex Mono", monospace; font-size: 1.25rem; font-weight: 600; letter-spacing: .04em; }
+      .iban-row.bad .digits { color: #b3372e; }
+      .iban-row.good .digits { color: #166b45; }
+      .iban-row .st { font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 9px; }
+      .iban-row.bad .st { background: #fbeae7; color: #8f2a23; }
+      .iban-row.good .st { background: #e4f3ea; color: #166b45; }
+      .alert-box p.note { margin: 12px 0 0; font-size: .94rem; color: var(--ink); }
+      @media (prefers-color-scheme: dark) { .alert-box p.note { color: #f2ede2; } }
+
+      .checks { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 9px; }
+      .checks li { display: flex; gap: 11px; align-items: flex-start; background: #fbf9f2; border: 1px solid #e6e0cd; border-radius: 10px; padding: 11px 14px; font-size: .96rem; color: #22303c; }
+      .checks li .st-ic { font-weight: 800; flex: none; }
+      .checks li.ok .st-ic { color: #166b45; }
+      .checks li.ko .st-ic { color: #b3372e; }
+      .checks li small { display: block; color: #71808e; font-size: .84rem; margin-top: 1px; }
+
+      /* Verdicts */
+      .verdict { border-radius: 14px; padding: 20px; margin-top: 18px; }
+      .verdict .v-title { font-family: "Source Serif 4", serif; font-weight: 900; font-size: 1.5rem; margin: 0 0 6px; }
+      .verdict p { margin: 0 0 8px; }
+      .verdict p:last-child { margin-bottom: 0; }
+      .verdict.bad { background: var(--danger-bg); border: 1.5px solid var(--danger); }
+      .verdict.bad .v-title { color: var(--danger-dark); }
+      @media (prefers-color-scheme: dark) { .verdict.bad .v-title { color: #f0a49d; } }
+      .verdict.good { background: var(--ok-bg); border: 1.5px solid var(--ok); }
+      .verdict.good .v-title { color: var(--ok); }
+      @media (prefers-color-scheme: dark) { .verdict.good .v-title { color: #8fd6ae; } }
+      .verdict .amount-lost { font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+
+      .replay { margin-top: 14px; text-align: right; }
+
+      /* Sélecteur de destins */
+      .destin-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+      @media (max-width: 700px) { .destin-picker { grid-template-columns: 1fr; } }
+      .pick {
+        border: 1.5px solid var(--line); background: var(--paper); border-radius: 14px;
+        padding: 16px; text-align: left; cursor: pointer; font: inherit; color: var(--ink);
+        display: flex; flex-direction: column; gap: 5px; min-height: 48px;
+      }
+      .pick:hover { border-color: var(--teal); }
+      .pick:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+      .pick .pn { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-dark); }
+      @media (prefers-color-scheme: dark) { .pick .pn { color: #7fd1cf; } }
+      .pick .pt { font-family: "Source Serif 4", serif; font-weight: 700; font-size: 1.12rem; line-height: 1.2; }
+      .pick .pd { font-size: .87rem; color: var(--muted); }
+      .pick .pstat { font-size: .8rem; font-weight: 700; margin-top: 4px; }
+      .pick .pstat.bad { color: var(--danger); } .pick .pstat.good { color: var(--ok); }
+
+      /* Finale */
+      .finale {
+        margin-top: 56px; background: var(--marine); color: #f5efe2; border-radius: 22px;
+        padding: 42px 30px 38px; text-align: center; box-shadow: var(--shadow);
+      }
+      @media (max-width: 560px) { .finale { padding: 32px 18px 30px; } }
+      .finale .all-done { display: none; font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8fd8d6; margin-bottom: 14px; }
+      .finale.complete .all-done { display: block; }
+      .finale h2 { font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 900; line-height: 1.15; margin: 0 0 14px; }
+      .finale h2 em { font-style: italic; color: #7fd1cf; }
+      .finale p { max-width: 600px; margin: 0 auto 10px; opacity: .88; }
+      .recap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 28px 0 6px; text-align: left; }
+      @media (max-width: 700px) { .recap { grid-template-columns: 1fr; } }
+      .recap .rc { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); border-radius: 14px; padding: 16px; }
+      .recap .rc .rt { font-weight: 700; font-size: .95rem; margin-bottom: 6px; }
+      .recap .rc .rr { font-family: "Source Serif 4", serif; font-size: 1.3rem; font-weight: 900; }
+      .recap .rc.bad .rr { color: #f0a49d; }
+      .recap .rc.good .rr { color: #8fd6ae; }
+      .recap .rc p { font-size: .87rem; margin: 6px 0 0; opacity: .8; }
+      .signature { margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.18); }
+      .signature .brand { font-family: "Source Serif 4", serif; font-weight: 900; font-size: 1.25rem; letter-spacing: .02em; }
+      .signature .tag { font-size: .9rem; opacity: .8; margin-top: 2px; }
+      .signature .fine { font-size: .78rem; opacity: .6; margin-top: 12px; }
+
+      footer { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 30px; }
+    </style>
+  </head>
+  <body>
+    <div class="demo-flag">
+      <span class="flag-text">Démonstration <span class="dot">•</span> données fictives <span class="dot">•</span> aucune transaction réelle</span>
+      <button class="btn-restart" id="btn-restart-global" type="button" aria-label="Recommencer la démonstration depuis le début — retour au courriel du vendredi à 16 h 55">↺ Recommencer</button>
+    </div>
+
+    <div class="wrap">
+      <header class="hero">
+        <span class="kicker">Camara Conseil — Démo interactive</span>
+        <h1>Le même piège,<br /><em>trois destins.</em></h1>
+        <p class="lede">Vous êtes le comptable d'une PME. Un courriel de votre fournisseur habituel vient d'arriver, avec une facture — et un <strong>nouvel IBAN</strong>. Vivez la même situation trois fois, et voyez comment elle se termine selon qui traite la facture&nbsp;: <strong>vous, pressé</strong> ; <strong>une IA qui obéit</strong> ; ou <strong>un agent sécurisé</strong>.</p>
+        <div>
+          <span class="scene-clock">
+            <span class="time">16:55</span>
+            <span class="lbl">Vendredi<br />fin de journée</span>
+          </span>
+        </div>
+        <div class="progress" aria-label="Progression dans les trois destins">
+          <span class="chip" id="chip-1"><span class="n">1</span> Le comptable distrait</span>
+          <span class="chip" id="chip-2"><span class="n">2</span> L'IA naïve</span>
+          <span class="chip" id="chip-3"><span class="n">3</span> L'agent sécurisé</span>
+        </div>
+      </header>
+
+      <!-- ============ LA SCÈNE ============ -->
+      <section id="scene" aria-label="Le courriel reçu">
+        <div class="sec-head">
+          <h2>Le courriel qui change tout</h2>
+          <p>Il est 16&nbsp;h&nbsp;55. La semaine est presque finie. Ce message arrive dans votre boîte :</p>
+        </div>
+
+        <div class="mock" role="img" aria-label="Courriel fictif de Plomberie Martin annonçant un changement de coordonnées bancaires et joignant une facture de 470 dollars">
+          <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Boîte de réception — Courriel</span></div>
+          <div class="mock-body">
+            <div class="mail-head">
+              <div class="avatar">PM</div>
+              <div class="who">
+                <div class="name">Plomberie Martin — Facturation</div>
+                <div class="addr">facturation@plomberie-martin.ca</div>
+              </div>
+              <div class="when">ven. 16:55</div>
+            </div>
+            <div class="mail-subject">Facture 2026-114 — nouvelles coordonnées bancaires</div>
+            <div class="mail-body">
+              <p>Bonjour,</p>
+              <p>Veuillez trouver ci-joint la facture <strong>2026-114</strong> pour le remplacement du chauffe-eau effectué cette semaine.</p>
+              <p><strong>Important :</strong> nous avons récemment changé de banque. Merci de mettre à jour nos coordonnées et d'utiliser <strong>uniquement le nouvel IBAN ci-dessous</strong> pour ce paiement et les suivants. L'ancien compte sera fermé sous peu.</p>
+              <div class="iban-box">
+                <span class="lab">Nouvel IBAN — Plomberie Martin</span>
+                <span class="mono">FR76 •••• •••• •••• •••• •••• <strong>5443</strong></span>
+              </div>
+              <p>Merci de procéder au paiement dès réception afin d'éviter toute interruption de service.</p>
+              <p>Cordialement,<br />L'équipe Plomberie Martin</p>
+            </div>
+            <div class="attach">
+              <span class="pdf">PDF</span>
+              <div>
+                <div class="fn">Facture_2026-114.pdf</div>
+                <div class="fs">1 page — 84 Ko</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="mock" role="img" aria-label="Facture fictive numéro 2026-114 de Plomberie Martin, total 470 dollars">
+          <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Facture_2026-114.pdf</span></div>
+          <div class="mock-body">
+            <div class="invoice">
+              <div class="inv-top">
+                <div class="biz">PLOMBERIE MARTIN<small>Chauffage • Sanitaire • Dépannage 7 j/7</small></div>
+                <div class="inv-no">FACTURE<b>N° 2026-114</b>Vendredi — échéance : à réception</div>
+              </div>
+              <table>
+                <thead><tr><th>Description</th><th class="r">Montant</th></tr></thead>
+                <tbody>
+                  <tr><td>Remplacement d'un chauffe-eau 270 L — pièces et main-d'œuvre</td><td class="r">470,00 $</td></tr>
+                </tbody>
+              </table>
+              <div class="total"><span>Total à payer</span><b>470,00 $</b></div>
+              <div class="pay-note">Paiement par virement — IBAN : <span class="mono">FR76 •••• •••• •••• •••• •••• 5443</span> <em>(nouvelles coordonnées, voir courriel)</em></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-head" style="margin-top:36px">
+          <h2>À vous de vivre la suite — trois fois</h2>
+          <p>Choisissez un destin pour commencer. Vous pouvez les faire dans l'ordre ou dans le désordre : la facture, elle, ne change pas.</p>
+        </div>
+        <div class="destin-picker">
+          <button class="pick" data-goto="destin-1" type="button">
+            <span class="pn">Destin 1</span>
+            <span class="pt">Le comptable distrait</span>
+            <span class="pd">C'est vous, un vendredi à 16 h 55. Vous voulez boucler et partir.</span>
+            <span class="pstat" id="stat-1"></span>
+          </button>
+          <button class="pick" data-goto="destin-2" type="button">
+            <span class="pn">Destin 2</span>
+            <span class="pt">L'IA naïve</span>
+            <span class="pd">Vous confiez la facture à un assistant IA. Il exécute, vite et sans discuter.</span>
+            <span class="pstat" id="stat-2"></span>
+          </button>
+          <button class="pick" data-goto="destin-3" type="button">
+            <span class="pn">Destin 3</span>
+            <span class="pt">L'agent sécurisé</span>
+            <span class="pd">Le même agent, mais gouverné : il vérifie avant d'agir — et vous laisse décider.</span>
+            <span class="pstat" id="stat-3"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ============ DESTIN 1 ============ -->
+      <section class="destin d1" id="destin-1" aria-label="Destin 1 : le comptable distrait">
+        <div class="destin-head">
+          <div class="destin-num">1</div>
+          <div>
+            <h3>Le comptable distrait</h3>
+            <div class="sub">Vous traitez la facture vous-même, à la main, entre deux autres tâches.</div>
+          </div>
+        </div>
+        <p class="destin-intro">Plomberie Martin est un fournisseur habituel, la facture a l'air normale, le montant est petit. Il est <strong>16 h 57</strong>, vous avez un train de vie à reprendre : les enfants, la fin de semaine. Vous ouvrez votre banque en ligne.</p>
+
+        <div class="step on" data-step>
+          <div class="mock">
+            <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Banque en ligne — Nouveau virement</span></div>
+            <div class="mock-body">
+              <div class="bank-head">
+                <div class="logo">BQ</div>
+                <div><div class="bt">Ma Banque — Espace entreprise</div><div class="bs">Compte courant •••• 2214</div></div>
+              </div>
+              <div class="pay-field"><label>Bénéficiaire</label><div class="val">Plomberie Martin</div></div>
+              <div class="pay-field"><label>IBAN du bénéficiaire</label><div class="val"><span class="mono">FR76 •••• •••• •••• •••• •••• 5443</span><span class="tag">Nouveau — copié du courriel</span></div></div>
+              <div class="pay-field"><label>Montant</label><div class="val amount">470,00 $</div></div>
+              <div class="pay-field"><label>Référence</label><div class="val">Facture 2026-114</div></div>
+              <div class="btn-row">
+                <button class="btn btn-danger" type="button" data-next>Payer 470,00 $ maintenant</button>
+              </div>
+              <p style="font-size:.85rem;color:#71808e;margin:12px 0 0">Un virement confirmé est <strong>irréversible</strong> : une fois parti, il ne peut pas être rappelé.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="narration warn"><span class="ic">💸</span><p>Le virement part instantanément. Sur le relevé, tout semble en ordre : « Plomberie Martin — 470,00 $ ». Vous fermez l'ordinateur. Bonne fin de semaine.</p></div>
+          <div class="flow">
+            <span class="node">Votre compte entreprise</span><span class="arrow">→</span>
+            <span class="amt">470,00 $</span><span class="arrow">→</span>
+            <span class="node bad">Compte …5443 — en réalité, celui du fraudeur</span>
+          </div>
+          <div class="btn-row"><button class="btn btn-marine" type="button" data-next>Arrive lundi matin…</button></div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="call">
+            <span class="day">Lundi — 9 h 12</span>
+            <div class="call-top">
+              <div class="avatar">PM</div>
+              <div><div class="ct">Plomberie Martin</div><div class="cs">Appel entrant — le vrai fournisseur, à son numéro habituel</div></div>
+            </div>
+            <blockquote>« Bonjour, je vous appelle pour la facture 2026-114 : nous n'avons rien reçu. Et au fait… nous n'avons jamais changé de banque. Ce courriel ne vient pas de nous. »</blockquote>
+          </div>
+          <div class="verdict bad" aria-live="polite">
+            <p class="v-title">470 $ perdus.</p>
+            <p>Le courriel venait d'un fraudeur qui avait imité votre fournisseur. L'argent est arrivé sur son compte le vendredi soir ; le lundi, il a déjà disparu. La banque ne peut pas le récupérer : <strong>vous</strong> avez autorisé le virement.</p>
+            <p>Et la vraie facture, elle, reste à payer : <span class="amount-lost">470,00 $</span> de perte, <span class="amount-lost">470,00 $</span> toujours dus.</p>
+          </div>
+          <div class="replay"><button class="btn btn-ghost" type="button" data-replay="1">↺ Rejouer ce destin</button></div>
+        </div>
+      </section>
+
+      <!-- ============ DESTIN 2 ============ -->
+      <section class="destin d2" id="destin-2" aria-label="Destin 2 : l'IA naïve">
+        <div class="destin-head">
+          <div class="destin-num">2</div>
+          <div>
+            <h3>L'IA naïve</h3>
+            <div class="sub">Même vendredi, même facture — mais cette fois, vous déléguez à un assistant IA.</div>
+          </div>
+        </div>
+        <p class="destin-intro">Vous transférez le courriel à votre assistant IA avec une consigne simple. Il est rapide, serviable, et il fait <strong>exactement</strong> ce qu'on lui demande. Regardez-le travailler.</p>
+
+        <div class="step on" data-step>
+          <div class="mock">
+            <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Assistant IA — Conversation</span></div>
+            <div class="mock-body">
+              <div class="chat" id="chat-2">
+                <div class="msg user">Voici une facture de Plomberie Martin (pièce jointe). Traite-la comme d'habitude, s'il te plaît.</div>
+                <div class="typing" id="typing-2"><span></span><span></span><span></span></div>
+              </div>
+              <div class="btn-row" id="row-start-2">
+                <button class="btn btn-marine" type="button" id="start-2">Lancer l'assistant</button>
+              </div>
+              <div id="ai-done-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="narration bad"><span class="ic">⚡</span><p>L'assistant a préparé le paiement en quelques secondes et attend juste votre clic. C'est exactement ce que vous lui avez demandé. Un clic, comme d'habitude.</p></div>
+          <div class="mock">
+            <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Banque en ligne — Virement préparé par l'assistant</span></div>
+            <div class="mock-body">
+              <div class="bank-head">
+                <div class="logo">BQ</div>
+                <div><div class="bt">Ma Banque — Espace entreprise</div><div class="bs">Préparé automatiquement — en attente de confirmation</div></div>
+              </div>
+              <div class="pay-field"><label>Bénéficiaire</label><div class="val">Plomberie Martin <span class="tag">Coordonnées mises à jour</span></div></div>
+              <div class="pay-field"><label>IBAN du bénéficiaire</label><div class="val"><span class="mono">FR76 •••• •••• •••• •••• •••• 5443</span></div></div>
+              <div class="pay-field"><label>Montant</label><div class="val amount">470,00 $</div></div>
+              <div class="btn-row">
+                <button class="btn btn-danger" type="button" data-next>Confirmer le paiement</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="flow">
+            <span class="node">Votre compte entreprise</span><span class="arrow">→</span>
+            <span class="amt">470,00 $</span><span class="arrow">→</span>
+            <span class="node bad">Compte …5443 — celui du fraudeur</span>
+          </div>
+          <div><span class="timer-chip">⏱ Exécuté en 4 secondes — zéro vérification, zéro hésitation</span></div>
+          <div class="btn-row"><button class="btn btn-marine" type="button" data-next>Arrive lundi matin…</button></div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="call">
+            <span class="day">Lundi — 9 h 12</span>
+            <div class="call-top">
+              <div class="avatar">PM</div>
+              <div><div class="ct">Plomberie Martin</div><div class="cs">Appel entrant — le vrai fournisseur, à son numéro habituel</div></div>
+            </div>
+            <blockquote>« Bonjour, je vous appelle pour la facture 2026-114 : nous n'avons rien reçu. Et au fait… nous n'avons jamais changé de banque. Ce courriel ne vient pas de nous. »</blockquote>
+          </div>
+          <div class="verdict bad" aria-live="polite">
+            <p class="v-title">470 $ perdus — plus vite.</p>
+            <p>L'IA n'a rien fait de « mal » : elle a obéi. Mais elle ne s'est jamais demandé si le nouvel IBAN était le bon, parce que personne ne lui a appris à vérifier. <strong>Pire que l'humain distrait : elle n'hésite jamais</strong>, elle ne trouve rien « bizarre », elle ne prend pas le téléphone.</p>
+            <p>Et elle passe à l'échelle : ce vendredi-là, elle aurait traité 10, 50, 200 factures exactement de la même façon.</p>
+          </div>
+          <div class="replay"><button class="btn btn-ghost" type="button" data-replay="2">↺ Rejouer ce destin</button></div>
+        </div>
+      </section>
+
+      <!-- ============ DESTIN 3 ============ -->
+      <section class="destin d3" id="destin-3" aria-label="Destin 3 : l'agent sécurisé">
+        <div class="destin-head">
+          <div class="destin-num">3</div>
+          <div>
+            <h3>L'agent sécurisé</h3>
+            <div class="sub">Même vendredi, même 16 h 55, même facture. Cette fois, l'agent vérifie avant d'agir.</div>
+          </div>
+        </div>
+        <p class="destin-intro">Vous confiez la facture au même type d'assistant — mais celui-ci travaille sous des règles : <strong>un changement de coordonnées bancaires ne passe jamais sans vérification</strong>, et les actions sensibles attendent un humain.</p>
+
+        <div class="step on" data-step>
+          <div class="mock">
+            <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Agent Camara Conseil — Traitement supervisé</span></div>
+            <div class="mock-body">
+              <div class="chat">
+                <div class="msg user">Voici une facture de Plomberie Martin (pièce jointe). Traite-la comme d'habitude, s'il te plaît.</div>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-teal" type="button" data-next>Lancer l'agent</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="narration"><span class="ic">🔎</span><p>L'agent lit la facture, puis il fait ce que ni le comptable pressé ni l'IA naïve n'ont fait : <strong>il compare</strong>.</p></div>
+          <ul class="checks">
+            <li class="ok"><span class="st-ic">✓</span><div>Facture lue : 2026-114 — <strong>470,00 $</strong><small>Montant cohérent avec les factures habituelles de ce fournisseur.</small></div></li>
+            <li class="ok"><span class="st-ic">✓</span><div>Fournisseur reconnu : Plomberie Martin<small>Client de l'entreprise, payé régulièrement depuis 2023.</small></div></li>
+            <li class="ko"><span class="st-ic">✗</span><div><strong>Contrôle des coordonnées bancaires : échec</strong><small>Le courriel annonce un nouvel IBAN, demandé un vendredi à 16 h 55, avec une incitation à payer « dès réception ».</small></div></li>
+          </ul>
+          <div class="btn-row"><button class="btn btn-teal" type="button" data-next>Voir le détail de l'alerte</button></div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="alert-box" role="alert">
+            <div class="a-title">⛔ Changement d'IBAN refusé — paiement bloqué</div>
+            <div class="iban-compare">
+              <div class="iban-row bad">
+                <span class="lab">IBAN annoncé dans le courriel</span>
+                <span class="digits">…5443</span>
+                <span class="st">Inconnu</span>
+              </div>
+              <div class="iban-row good">
+                <span class="lab">IBAN au référentiel fournisseurs</span>
+                <span class="digits">…5678</span>
+                <span class="st">Vérifié</span>
+              </div>
+            </div>
+            <p class="note">Les deux numéros ne correspondent pas, et aucun changement de banque n'a été confirmé par le fournisseur par un autre canal. <strong>L'agent ne mettra pas à jour les coordonnées et ne paiera pas sur ce nouvel IBAN.</strong></p>
+          </div>
+          <div class="btn-row"><button class="btn btn-teal" type="button" data-next>Que propose l'agent ?</button></div>
+        </div>
+
+        <div class="step" data-step>
+          <div class="narration"><span class="ic">✉️</span><p>L'agent ne décide pas à votre place. Il prépare la vérification et <strong>attend votre décision</strong>.</p></div>
+          <div class="mock">
+            <div class="mock-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Brouillon préparé par l'agent — en attente de votre validation</span></div>
+            <div class="mock-body">
+              <div class="mail-head">
+                <div class="avatar" style="background:#0e7c7b">CC</div>
+                <div class="who">
+                  <div class="name">À : Plomberie Martin</div>
+                  <div class="addr">Adresse habituelle du fournisseur (référentiel), pas celle du courriel reçu</div>
+                </div>
+              </div>
+              <div class="mail-subject">Vérification — changement de coordonnées bancaires ?</div>
+              <div class="mail-body">
+                <p>Bonjour,</p>
+                <p>Nous avons reçu ce jour une facture 2026-114 accompagnée d'un avis de changement de banque (nouvel IBAN se terminant par <strong>5443</strong>).</p>
+                <p>Avant tout paiement, pouvez-vous nous confirmer — idéalement par téléphone, à notre numéro habituel — si ce changement vient bien de vous ? En attendant votre confirmation, nous conservons vos coordonnées actuelles (IBAN se terminant par <strong>5678</strong>).</p>
+                <p>Merci,<br />La comptabilité</p>
+              </div>
+            </div>
+          </div>
+          <p style="margin:16px 0 0;font-weight:700">À vous de décider :</p>
+          <div class="btn-row">
+            <button class="btn btn-teal" type="button" data-branch="verify">Envoyer le courriel de vérification</button>
+            <button class="btn btn-outline-danger" type="button" data-branch="force">Passer outre et payer quand même</button>
+          </div>
+        </div>
+
+        <div class="step" data-step data-branch-step="verify">
+          <div class="call" style="background:#123f36">
+            <span class="day">Lundi — 9 h 04</span>
+            <div class="call-top">
+              <div class="avatar" style="background:#0e7c7b">PM</div>
+              <div><div class="ct">Plomberie Martin</div><div class="cs">Réponse du fournisseur, par son canal habituel</div></div>
+            </div>
+            <blockquote>« Merci de votre vigilance ! Nous n'avons jamais changé de banque — ce courriel est une tentative de fraude. Payez comme d'habitude sur notre compte habituel. »</blockquote>
+          </div>
+          <div class="flow" style="margin-top:18px">
+            <span class="node">Votre compte entreprise</span><span class="arrow">→</span>
+            <span class="amt">470,00 $</span><span class="arrow">→</span>
+            <span class="node good">Compte …5678 — le vrai fournisseur</span>
+          </div>
+          <div class="verdict good" aria-live="polite">
+            <p class="v-title">470 $ sauvés.</p>
+            <p>Même facture, même vendredi 16 h 55 — une fin différente. L'agent a fait le travail ingrat : lire, comparer, bloquer, préparer la vérification. Mais c'est <strong>vous</strong> qui avez décidé d'envoyer ce courriel plutôt que de payer.</p>
+            <p>Le paiement part ensuite, au bon endroit, sur l'IBAN vérifié.</p>
+          </div>
+          <div class="replay"><button class="btn btn-ghost" type="button" data-replay="3">↺ Rejouer ce destin</button></div>
+        </div>
+
+        <div class="step" data-step data-branch-step="force">
+          <div class="narration bad"><span class="ic">⚠️</span><p>Vous avez le dernier mot — c'est le principe. L'agent consigne votre décision dans le journal, lève le blocage, et le paiement part sur l'IBAN du courriel.</p></div>
+          <div class="flow">
+            <span class="node">Votre compte entreprise</span><span class="arrow">→</span>
+            <span class="amt">470,00 $</span><span class="arrow">→</span>
+            <span class="node bad">Compte …5443 — celui du fraudeur</span>
+          </div>
+          <div class="verdict bad" aria-live="polite">
+            <p class="v-title">470 $ perdus — malgré l'alerte.</p>
+            <p>L'agent avait tout fait : détecté l'écart, bloqué le paiement, préparé la vérification. La décision finale vous appartenait, et elle a été prise contre son avis — elle est tracée, datée, assumée.</p>
+            <p>C'est exactement la frontière : <strong>l'agent propose, l'humain décide</strong> — pour le meilleur ou pour le pire.</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-teal" type="button" data-back-to-choice>← Revenir au choix et envoyer la vérification</button>
+          </div>
+          <div class="replay"><button class="btn btn-ghost" type="button" data-replay="3">↺ Rejouer ce destin</button></div>
+        </div>
+      </section>
+
+      <!-- ============ FINALE ============ -->
+      <div class="finale" id="finale">
+        <div class="all-done">✓ Vous avez vécu les trois destins</div>
+        <h2>« L'agent propose,<br /><em>l'humain décide.</em> »</h2>
+        <p>Le piège était le même dans les trois cas. Ce qui change, ce n'est pas la facture — c'est la gouvernance autour de celui qui la traite : vérifier avant d'agir, bloquer ce qui est sensible, et laisser la décision finale à un humain.</p>
+        <div class="recap">
+          <div class="rc bad">
+            <div class="rt">1 — Le comptable distrait</div>
+            <div class="rr">− 470 $</div>
+            <p>Payé en 2 minutes, sans vérification. Perte découverte le lundi.</p>
+          </div>
+          <div class="rc bad">
+            <div class="rt">2 — L'IA naïve</div>
+            <div class="rr">− 470 $</div>
+            <p>Payé en 4 secondes, sans hésitation. Même perte, à grande échelle.</p>
+          </div>
+          <div class="rc good">
+            <div class="rt">3 — L'agent sécurisé</div>
+            <div class="rr">470 $ sauvés</div>
+            <p>IBAN refusé, paiement bloqué, vérification préparée — décision humaine.</p>
+          </div>
+        </div>
+        <div style="margin-top:28px">
+          <button class="btn-restart" type="button" style="font-size:1rem;padding:13px 26px;min-height:48px" aria-label="Recommencer la démonstration depuis le début — retour au courriel du vendredi à 16 h 55">↺ Recommencer la démo</button>
+        </div>
+        <div class="signature">
+          <div class="brand">Camara Conseil</div>
+          <div class="tag">Adopter. Innover. Sécuriser.</div>
+          <div class="fine">Démonstration interactive réalisée pour la candidature CreAItors — entreprise, fournisseur, facture et coordonnées bancaires entièrement fictifs.</div>
+        </div>
+      </div>
+
+      <footer>Démonstration — données fictives. Aucun courriel n'a été envoyé, aucun paiement n'a été effectué.</footer>
+    </div>
+
+    <script>
+      (function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var done = { 1: false, 2: false, 3: false };
+
+        function scrollToEl(el) {
+          if (!el) return;
+          setTimeout(function () {
+            el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+          }, 60);
+        }
+
+        /* Navigation depuis le sélecteur de destins */
+        document.querySelectorAll("[data-goto]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            scrollToEl(document.getElementById(btn.getAttribute("data-goto")));
+          });
+        });
+
+        /* Avancement linéaire des étapes */
+        document.querySelectorAll("[data-next]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var step = btn.closest("[data-step]");
+            var next = step && step.nextElementSibling;
+            while (next && !(next.hasAttribute && next.hasAttribute("data-step"))) {
+              next = next.nextElementSibling;
+            }
+            if (next) {
+              next.classList.add("on");
+              btn.disabled = true;
+              scrollToEl(next);
+              markIfVerdict(next);
+            }
+          });
+        });
+
+        /* Destin 2 : l'assistant IA travaille tout seul */
+        var startBtn = document.getElementById("start-2");
+        if (startBtn) {
+          startBtn.addEventListener("click", function () {
+            startBtn.disabled = true;
+            var chat = document.getElementById("chat-2");
+            var typing = document.getElementById("typing-2");
+            var lines = [
+              "<span class='who'>Assistant IA</span><span class='check'>✓</span> Facture lue : 2026-114 — <strong>470,00 $</strong>, Plomberie Martin.",
+              "<span class='who'>Assistant IA</span><span class='check'>✓</span> Le courriel indique un changement de banque. <strong>Coordonnées bancaires mises à jour</strong> : nouvel IBAN …5443 enregistré pour Plomberie Martin.",
+              "<span class='who'>Assistant IA</span><span class='check'>✓</span> Paiement préparé. Il ne reste qu'à confirmer ci-dessous — je m'occupe du reste."
+            ];
+            var delay = reduced ? 60 : 650;
+            typing.classList.add("on");
+            var i = 0;
+            function nextLine() {
+              if (i > 0) {
+                var m = document.createElement("div");
+                m.className = "msg bot";
+                m.innerHTML = lines[i - 1];
+                chat.insertBefore(m, typing);
+              }
+              if (i >= lines.length) {
+                typing.classList.remove("on");
+                var row = document.getElementById("row-start-2");
+                var destin = document.getElementById("destin-2");
+                var steps = destin.querySelectorAll("[data-step]");
+                steps[1].classList.add("on");
+                scrollToEl(steps[1]);
+                return;
+              }
+              i++;
+              setTimeout(nextLine, delay);
+            }
+            setTimeout(nextLine, delay);
+          });
+        }
+
+        /* Destin 3 : le choix du visiteur */
+        document.querySelectorAll("[data-branch]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var choice = btn.getAttribute("data-branch");
+            var destin = document.getElementById("destin-3");
+            destin.querySelectorAll("[data-branch]").forEach(function (b) { b.disabled = true; });
+            var target = destin.querySelector("[data-branch-step='" + choice + "']");
+            if (target) {
+              target.classList.add("on");
+              scrollToEl(target);
+              if (choice === "verify") markDone(3, false);
+            }
+          });
+        });
+
+        var backBtn = document.querySelector("[data-back-to-choice]");
+        if (backBtn) {
+          backBtn.addEventListener("click", function () {
+            var destin = document.getElementById("destin-3");
+            var forceStep = destin.querySelector("[data-branch-step='force']");
+            forceStep.classList.remove("on");
+            destin.querySelectorAll("[data-branch]").forEach(function (b) { b.disabled = false; });
+            var choiceStep = destin.querySelector("[data-branch-step='verify']").previousElementSibling;
+            scrollToEl(choiceStep);
+          });
+        }
+
+        /* Verdict atteint = destin terminé */
+        function markIfVerdict(stepEl) {
+          if (!stepEl.querySelector(".verdict")) return;
+          var section = stepEl.closest(".destin");
+          if (!section) return;
+          if (section.id === "destin-1") markDone(1, true);
+          if (section.id === "destin-2") markDone(2, true);
+        }
+        document.querySelectorAll(".destin .step").forEach(function (s) {
+          var obs = new MutationObserver(function () { if (s.classList.contains("on")) markIfVerdict(s); });
+          obs.observe(s, { attributes: true, attributeFilter: ["class"] });
+        });
+
+        function markDone(n, bad) {
+          if (done[n]) return;
+          done[n] = true;
+          var chip = document.getElementById("chip-" + n);
+          chip.classList.add("done");
+          if (bad) chip.classList.add("bad");
+          chip.querySelector(".n").textContent = "✓";
+          var stat = document.getElementById("stat-" + n);
+          if (n === 3) { stat.textContent = "✓ Vécu — 470 $ sauvés"; stat.className = "pstat good"; }
+          else { stat.textContent = "✓ Vécu — 470 $ perdus"; stat.className = "pstat bad"; }
+          if (done[1] && done[2] && done[3]) {
+            document.getElementById("finale").classList.add("complete");
+          }
+        }
+
+        /* Recommencer — réinitialisation globale, retour au courriel du vendredi 16 h 55 */
+        function resetDemo() {
+          done = { 1: false, 2: false, 3: false };
+          [1, 2, 3].forEach(function (n) {
+            var chip = document.getElementById("chip-" + n);
+            if (chip) {
+              chip.classList.remove("done", "bad");
+              chip.querySelector(".n").textContent = String(n);
+            }
+            var stat = document.getElementById("stat-" + n);
+            if (stat) { stat.textContent = ""; stat.className = "pstat"; }
+          });
+          var finale = document.getElementById("finale");
+          if (finale) finale.classList.remove("complete");
+
+          document.querySelectorAll(".destin").forEach(function (section) {
+            var steps = section.querySelectorAll("[data-step]");
+            steps.forEach(function (s, idx) {
+              if (idx === 0) s.classList.add("on"); else s.classList.remove("on");
+            });
+            section.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+          });
+
+          var chat = document.getElementById("chat-2");
+          if (chat) chat.querySelectorAll(".msg.bot").forEach(function (m) { m.remove(); });
+          var typing = document.getElementById("typing-2");
+          if (typing) typing.classList.remove("on");
+
+          scrollToEl(document.getElementById("scene"));
+        }
+        document.querySelectorAll(".btn-restart").forEach(function (b) {
+          b.addEventListener("click", resetDemo);
+        });
+
+        /* Rejouer un destin */
+        document.querySelectorAll("[data-replay]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var n = btn.getAttribute("data-replay");
+            var section = document.getElementById("destin-" + n);
+            var steps = section.querySelectorAll("[data-step]");
+            steps.forEach(function (s, idx) { if (idx > 0) s.classList.remove("on"); });
+            section.querySelectorAll("button").forEach(function (b) { b.disabled = false; });
+            if (n === "2") {
+              var chat = document.getElementById("chat-2");
+              chat.querySelectorAll(".msg.bot").forEach(function (m) { m.remove(); });
+              document.getElementById("typing-2").classList.remove("on");
+            }
+            scrollToEl(section);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
